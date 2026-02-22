@@ -7,19 +7,24 @@ services:
       - server
     ports:
       - "3000:3000"
-    volumes:
-      - ./client:/client
-      - /client/node_modules 
+    # networks:
+    #   - frontend  
+    # volumes:
+    #   - ./client:/client
+    #   - /client/node_modules 
       
   server:
     build: ./server
     ports:
       - "4000:4000"
+    # networks:
+    #   - frontend
+    #   - backend    
     environment:
       PORT: ${PORT}
-    volumes:
-       - ./server:/server
-       - /server/node_modules   
+    # volumes:
+    #    - ./server:/server
+    #    - /server/node_modules   
     depends_on:
       - db
       
@@ -32,10 +37,16 @@ services:
        POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5433:5432"
+    # networks:
+    #   - backend     
     volumes:
       - pgdata:/var/lib/postgresql/data  
 
 
+
+# networks:
+#   - frontend
+#   - backend
 
 volumes:
   pgdata: 
