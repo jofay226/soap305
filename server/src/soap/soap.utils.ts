@@ -1,3 +1,5 @@
+import {Builder} from "xml2js"
+
 export const errorResponseBuilder = () => {
        return (`
            <soap:Envelope xmlns:soap="https://schemas.xmlsoap.org/soap/envelope/">
@@ -12,26 +14,22 @@ export const errorResponseBuilder = () => {
 }
 
 
-export const successResponseBuilder = () => {
-    return (`
-        <soap:Envelope xmlns:soap="https://schemas.xmlsoap.org/soap/envelope/">
-            <soap:Body>
-                <getUsersResponse>
-                    <users>
-                        <user>
-                            <id>2</id>
-                            <name>bob</name>
-                        </user>
-                        <user>
-                            <id>2</id>
-                            <name>bob</name>
-                        </user>
-                    </users>
-                </getUsersResponse>
-            </soap:Body>
-        </soap:Envelope>
-    `)
+export const successResponseBuilder = (users) => {
+    const builder = new Builder({headless: true})
 
-
-
+    const soapResponse = {
+        "soap:Envelope": {
+            "$": {"xmlns:soap" : "https://schemas.xmlsoap.org/soap/envelope/"},
+            "soap:Body":{
+                "getUsersResponse": {
+                    "user": users.map((u) => ({
+                        id: u.id,
+                        name: u.name
+                    }))
+                }
+            }
+        }
+    }
+    
+    return builder.buildObject(soapResponse)
 }

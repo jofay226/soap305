@@ -6,8 +6,9 @@ import cors from 'cors';
 
 const app = express();
 dotenv.config();
-app.use(cors({origin: "http://localhost:3000"}))
+
 app.use(bodyParser.text({type: "text/xml"}))
+app.use(cors({origin: "http://localhost:3000"}))
 app.use('/api/soap', userRoute)
 
 
