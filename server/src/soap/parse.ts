@@ -1,11 +1,18 @@
 import {parseStringPromise} from 'xml2js'
 
 
-export const parse = async (xml: string) => {
-    const parsed = await parseStringPromise(xml)
-    console.log(parsed);
+export const parseXml = async (xml: string) => {
+    const parsedRequest = await parseStringPromise(xml)
+    const body = parsedRequest['soap:Envelope']['soap:Body'][0]
 
+    const operationType = Object.keys(body)[0]
+    const payload = body[operationType]
 
-    // return {operationType, payload}
+    return {operationType, payload}
 }
+
+
+
+
+
 
