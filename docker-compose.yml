@@ -7,6 +7,8 @@ services:
       - server
     ports:
       - "3000:3000"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"  
     networks:
       - frontend
     volumes:
@@ -17,6 +19,7 @@ services:
     ports:
       - "4000:4000"
     environment:
+      CHOKIDAR_USEPOLLING: "true"
       PORT: ${PORT}
       DATABASE_URL: ${DATABASE_URL}
     depends_on:
