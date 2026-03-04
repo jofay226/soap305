@@ -5,7 +5,6 @@ import { dispatch } from './dispatch.ts';
 export const pipeline = async (req: Request,res:Response) => {
     const xml = req.body;
     const {operationType, payload} = await parseXml(xml)
-    dispatch(operationType, payload)
-
-    return res.json({message:"success"})
+    const xmlRes = await  dispatch(operationType, payload)    
+    return res.send(xmlRes)
 }

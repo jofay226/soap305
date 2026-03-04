@@ -3,10 +3,8 @@ import axios from "axios";
 
 const getUsersReq = `
     <soap:Envelope xmlns:soap="https://schemas.xmlsoap.org/soap/envelope/" >
-      <soap:Header>
-      </soap:Header>
       <soap:Body>
-        <usersRequest>getAllUsers</usersRequest>
+        <listUsersRequest></listUsersRequest>
       </soap:Body>
     </soap:Envelope>
 `;

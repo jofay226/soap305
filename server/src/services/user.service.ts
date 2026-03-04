@@ -14,9 +14,7 @@ import prisma from "../db/prisma.ts";
     
 // }
 
-
-
 export const listUsersService = async () => {
     const users = await prisma.user.findMany();
-    console.log(users);
+    return users
 }
