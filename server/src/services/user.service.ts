@@ -36,6 +36,23 @@ export const dbServices = {
                 }
             })
             return newUser
-        }
+        },
+        updateUserService: async (paylaod: createUserType) => {  
+            const updatedUser = await prisma.user.update({
+                where: {id: paylaod.id![0]},
+                data: {
+                    name: paylaod.name[0],
+                    age: +paylaod.age[0],
+                    email:  paylaod.email[0]
+                }
+            })
+            return updatedUser
+        },
     },
+    auth: {
+        
+    },
+    post: {
+        
+    }
 }
