@@ -27,7 +27,7 @@ export const dbServices = {
             return users
         },
         craeteUserService: async (paylaod: createUserType) => {  
-            
+    
             const newUser = await prisma.user.create({
                 data: {
                     name: paylaod.name[0],
