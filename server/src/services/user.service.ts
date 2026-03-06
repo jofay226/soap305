@@ -48,11 +48,17 @@ export const dbServices = {
             })
             return updatedUser
         },
+        deleteUserService: async (paylaod: createUserType) => {  
+            const deletedUser = await prisma.user.delete({
+                where: {id: paylaod.id![0]},
+            })
+            return deletedUser
+        },
     },
     auth: {
         
     },
     post: {
-        
+
     }
 }

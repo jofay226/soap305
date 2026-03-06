@@ -1,34 +1,72 @@
-"use client";
-import axios from "axios";
-
-const getUsersReq = `
-    <soap:Envelope xmlns:soap="https://schemas.xmlsoap.org/soap/envelope/" >
-      <soap:Body>
-        <listUsersRequest></listUsersRequest>
-      </soap:Body>
-    </soap:Envelope>
-`;
-
 export default function Home() {
-  const getUsersHandler = async () => {
-    const res = await axios.post(
-      "http://localhost:4000/api/soap",
-      getUsersReq,
-      {
-        headers: {
-          "Content-Type": "text/xml",
-        },
-      },
-    );
-    console.log(res);
-  };
-
   return (
-    <button
-      onClick={getUsersHandler}
-      className="px-5 py-2.5 bg-amber-600 rounded-full"
-    >
-      get all users
-    </button>
+    <div className="min-h-screen bg-gray-900 text-white p-10">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8">Users CRUD</h1>
+
+        {/* Create User */}
+        <div className="bg-gray-800 p-6 rounded-lg mb-8">
+          <h2 className="text-xl mb-4">Create User</h2>
+
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            <input className="bg-gray-700 p-2 rounded" placeholder="Name" />
+
+            <input className="bg-gray-700 p-2 rounded" placeholder="Email" />
+
+            <input className="bg-gray-700 p-2 rounded" placeholder="Age" />
+          </div>
+
+          <button className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-500">
+            Add User
+          </button>
+        </div>
+
+        {/* Users Table */}
+        <div className="bg-gray-800 rounded-lg overflow-hidden">
+          <table className="w-full">
+            <thead className="bg-gray-700">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Email</th>
+                <th className="p-3 text-left">Age</th>
+                <th className="p-3 text-left">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr className="border-t border-gray-700">
+                <td className="p-3">Ali</td>
+                <td className="p-3">ali@test.com</td>
+                <td className="p-3">25</td>
+                <td className="p-3 space-x-2">
+                  <button className="bg-green-600 px-3 py-1 rounded">
+                    Edit
+                  </button>
+
+                  <button className="bg-red-600 px-3 py-1 rounded">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+
+              <tr className="border-t border-gray-700">
+                <td className="p-3">John</td>
+                <td className="p-3">john@test.com</td>
+                <td className="p-3">30</td>
+                <td className="p-3 space-x-2">
+                  <button className="bg-green-600 px-3 py-1 rounded">
+                    Edit
+                  </button>
+
+                  <button className="bg-red-600 px-3 py-1 rounded">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   );
 }
