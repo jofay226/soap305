@@ -1,4 +1,33 @@
+"use client";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { fetchAllUsersReq } from "@/soapStructure/soap";
+import { Builder, parseStringPromise } from "xml2js";
+
 export default function Home() {
+  const [users, setUsers] = useState([]);
+  const builder = new Builder({ headless: true });
+
+  const getAllUsers = async () => {
+    const res = await axios.post(
+      "http://localhost:4000/api/soap",
+      builder.buildObject(fetchAllUsersReq),
+      {
+        headers: {
+          "Content-Type": "text/xml",
+        },
+      },
+    );
+    const jsonRes = await parseStringPromise(res.data);
+    const users =
+      jsonRes["soap:Envelope"]["soap:Body"][0].listUsersResponse[0].user;
+    console.log(users);
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-10">
       <div className="max-w-4xl mx-auto">
