@@ -22,6 +22,15 @@ export default function Home() {
     const users =
       jsonRes["soap:Envelope"]["soap:Body"][0].listUsersResponse[0].user;
     console.log(users);
+    const restructuredUsers = users.map((u) => ({
+      age: +u.age[0],
+      email: u.email[0],
+      id: u.id[0],
+      name: u.name[0],
+    }));
+    console.log(restructuredUsers);
+
+    // setUsers(() => ([...]))
   };
 
   useEffect(() => {
