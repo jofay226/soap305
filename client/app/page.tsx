@@ -21,16 +21,14 @@ export default function Home() {
     const jsonRes = await parseStringPromise(res.data);
     const users =
       jsonRes["soap:Envelope"]["soap:Body"][0].listUsersResponse[0].user;
-    console.log(users);
     const restructuredUsers = users.map((u) => ({
       age: +u.age[0],
       email: u.email[0],
       id: u.id[0],
       name: u.name[0],
     }));
-    console.log(restructuredUsers);
 
-    // setUsers(() => ([...]))
+    setUsers(restructuredUsers);
   };
 
   useEffect(() => {
@@ -72,35 +70,22 @@ export default function Home() {
             </thead>
 
             <tbody>
-              <tr className="border-t border-gray-700">
-                <td className="p-3">Ali</td>
-                <td className="p-3">ali@test.com</td>
-                <td className="p-3">25</td>
-                <td className="p-3 space-x-2">
-                  <button className="bg-green-600 px-3 py-1 rounded">
-                    Edit
-                  </button>
+              {users.map((u) => (
+                <tr key={u.id} className="border-t border-gray-700">
+                  <td className="p-3">{u.name}</td>
+                  <td className="p-3">{u.email}</td>
+                  <td className="p-3">{u.age}</td>
+                  <td className="p-3 space-x-2">
+                    <button className="bg-green-600 px-3 py-1 rounded">
+                      Edit
+                    </button>
 
-                  <button className="bg-red-600 px-3 py-1 rounded">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-
-              <tr className="border-t border-gray-700">
-                <td className="p-3">John</td>
-                <td className="p-3">john@test.com</td>
-                <td className="p-3">30</td>
-                <td className="p-3 space-x-2">
-                  <button className="bg-green-600 px-3 py-1 rounded">
-                    Edit
-                  </button>
-
-                  <button className="bg-red-600 px-3 py-1 rounded">
-                    Delete
-                  </button>
-                </td>
-              </tr>
+                    <button className="bg-red-600 px-3 py-1 rounded">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

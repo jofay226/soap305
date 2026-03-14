@@ -1,6 +1,6 @@
 import {Builder} from 'xml2js';
 
-export const buildSoapResponse = (operationType, payload) => {
+export const buildSoapResponse = (operationType: string, payload) => {
     const builder = new Builder({headless: true})
 
     const soapStructure = {
