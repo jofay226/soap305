@@ -3,10 +3,31 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { fetchAllUsersReq } from "@/soapStructure/soap";
 import { Builder, parseStringPromise } from "xml2js";
+import GrowingPlant from "@/components/GrowingPlant";
+
+type NewUserType = {
+  name: string;
+  age: number;
+  email: string;
+};
 
 export default function Home() {
   const [users, setUsers] = useState([]);
   const builder = new Builder({ headless: true });
+
+  const [newUser, setNewUser] = useState<NewUserType>({
+    name: "",
+    age: 0,
+    email: "",
+  });
+
+  console.log(newUser);
+
+  const newUserHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setNewUser((prev) => ({ ...prev, [name]: value }));
+  };
 
   const getAllUsers = async () => {
     const res = await axios.post(
@@ -45,11 +66,26 @@ export default function Home() {
           <h2 className="text-xl mb-4">Create User</h2>
 
           <div className="grid grid-cols-3 gap-3 mb-4">
-            <input className="bg-gray-700 p-2 rounded" placeholder="Name" />
+            <input
+              className="bg-gray-700 p-2 rounded"
+              placeholder="Name"
+              name="name"
+              onChange={newUserHandler}
+            />
 
-            <input className="bg-gray-700 p-2 rounded" placeholder="Email" />
+            <input
+              className="bg-gray-700 p-2 rounded"
+              placeholder="Email"
+              name="email"
+              onChange={newUserHandler}
+            />
 
-            <input className="bg-gray-700 p-2 rounded" placeholder="Age" />
+            <input
+              className="bg-gray-700 p-2 rounded"
+              placeholder="Age"
+              name="age"
+              onChange={newUserHandler}
+            />
           </div>
 
           <button className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-500">
@@ -89,6 +125,7 @@ export default function Home() {
             </tbody>
           </table>
         </div>
+        <GrowingPlant />
       </div>
     </div>
   );
