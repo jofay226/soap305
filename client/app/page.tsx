@@ -123,11 +123,11 @@ export default function Home() {
             </thead>
 
             <tbody>
-              {users.map((u) => (
-                <tr key={u.id} className="border-t border-gray-700">
-                  <td className="p-3">{u.name}</td>
-                  <td className="p-3">{u.email}</td>
-                  <td className="p-3">{u.age}</td>
+              {users?.map((u) => (
+                <tr key={u?.id} className="border-t border-gray-700">
+                  <td className="p-3">{u?.name}</td>
+                  <td className="p-3">{u?.email}</td>
+                  <td className="p-3">{u?.age}</td>
                   <td className="p-3 space-x-2">
                     <button className="bg-green-600 px-3 py-1 rounded">
                       Edit
@@ -142,7 +142,6 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-        <GrowingPlant />
       </div>
     </div>
   );
