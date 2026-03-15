@@ -4,6 +4,7 @@ import axios from "axios";
 import { fetchAllUsersReq } from "@/soapStructure/soap";
 import { Builder, parseStringPromise } from "xml2js";
 import GrowingPlant from "@/components/GrowingPlant";
+import { axiosInstance } from "@/utils/axios";
 
 type NewUserType = {
   name: string;
@@ -30,15 +31,11 @@ export default function Home() {
   };
 
   const getAllUsers = async () => {
-    const res = await axios.post(
-      "http://localhost:4000/api/soap",
+    const res = await axiosInstance.post(
+      "/",
       builder.buildObject(fetchAllUsersReq),
-      {
-        headers: {
-          "Content-Type": "text/xml",
-        },
-      },
     );
+
     const jsonRes = await parseStringPromise(res.data);
     const users =
       jsonRes["soap:Envelope"]["soap:Body"][0].listUsersResponse[0].user;
@@ -50,6 +47,23 @@ export default function Home() {
     }));
 
     setUsers(restructuredUsers);
+  };
+
+  const createUserHandler = async () => {
+    const createUserReqBody = `
+      <soap:Envelope xmlns:soap="https://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+          <createUserRequest>
+            <name>${newUser.name}</name>
+            <age>${newUser.age}</age>
+            <email>${newUser.name}</email>
+          </createUserRequest>
+        </soap:Body>
+      </soap:Envelope>
+    `;
+
+    const res = await axiosInstance.post("/", createUserReqBody);
+    console.log(res);
   };
 
   useEffect(() => {
@@ -88,7 +102,10 @@ export default function Home() {
             />
           </div>
 
-          <button className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-500">
+          <button
+            onClick={createUserHandler}
+            className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-500"
+          >
             Add User
           </button>
         </div>
