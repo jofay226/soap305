@@ -22,8 +22,6 @@ export default function Home() {
     email: "",
   });
 
-  console.log(newUser);
-
   const newUserHandler = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -56,7 +54,7 @@ export default function Home() {
           <createUserRequest>
             <name>${newUser.name}</name>
             <age>${newUser.age}</age>
-            <email>${newUser.name}</email>
+            <email>${newUser.email}</email>
           </createUserRequest>
         </soap:Body>
       </soap:Envelope>
@@ -64,6 +62,15 @@ export default function Home() {
 
     const res = await axiosInstance.post("/", createUserReqBody);
     console.log(res);
+
+    if (res.statusText === "OK") {
+      getAllUsers();
+      setNewUser({
+        name: "",
+        age: 0,
+        email: "",
+      });
+    }
   };
 
   useEffect(() => {
@@ -85,6 +92,7 @@ export default function Home() {
               placeholder="Name"
               name="name"
               onChange={newUserHandler}
+              value={newUser.name}
             />
 
             <input
@@ -92,9 +100,11 @@ export default function Home() {
               placeholder="Email"
               name="email"
               onChange={newUserHandler}
+              value={newUser.email}
             />
 
             <input
+              value={newUser.age}
               className="bg-gray-700 p-2 rounded"
               placeholder="Age"
               name="age"
